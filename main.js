@@ -25,15 +25,15 @@ class YuanToDollarPlugin extends obsidian.Plugin {
 
     if (!line) return;
 
-    // Check if the line contains ￥￥
-    const match = line.match(/￥￥/);
+    // Match both full-width ￥ and half-width ¥ variants.
+    const match = line.match(/[￥¥]{2}/);
 
     if (match) {
-      // Find the position of ￥￥
+      // Find the position of the yuan symbol pair
       const startPos = match.index;
-      const endPos = startPos + 2; // ￥￥ is 2 characters
+      const endPos = startPos + 2;
 
-      // Replace ￥￥ with $$
+      // Replace the matched yuan symbol pair with $$
       doc.replaceRange(
         '$$',
         { line: cursor.line, ch: startPos },
